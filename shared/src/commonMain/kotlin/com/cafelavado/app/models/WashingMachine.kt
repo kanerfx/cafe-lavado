@@ -1,30 +1,44 @@
 package com.cafelavado.app.models
 
-/**
- * Represents a washing or drying machine in the laundry room.
- *
- * @param timeRemainingSeconds Seconds left on the cycle, `null` when idle / reserved.
- */
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+
+// ============================================================
+//  WashingMachine
+//  ------------------------------------------------------------
+//  Firestore-ready: @Serializable + nullable optional fields with
+//  defaults, so partial documents hydrate cleanly.
+//
+//  Suggested Firestore collection: `machines`
+//  Document shape mirrors this data class (snake_case fields).
+// ============================================================
+
+@Serializable
 data class WashingMachine(
-    val id: String,
-    val label: String,
-    val type: MachineType,
-    val status: MachineStatus,
-    val timeRemainingSeconds: Int? = null,
+    @SerialName("id")                    val id: String = "",
+    @SerialName("label")                 val label: String = "",
+    @SerialName("type")                  val type: MachineType = MachineType.WASH,
+    @SerialName("status")                val status: MachineStatus = MachineStatus.FREE,
+    @SerialName("time_remaining_seconds") val timeRemainingSeconds: Int? = null,
+    @SerialName("cycle_started_at")      val cycleStartedAt: Long? = null,
+    @SerialName("cycle_duration_seconds") val cycleDurationSeconds: Int? = null,
+    @SerialName("reserved_by")           val reservedBy: String? = null,
+    @SerialName("location")              val location: String? = null,
 )
 
+@Serializable
 enum class MachineType(val displayName: String) {
-    WASH("Lavadora"),
-    DRY("Secadora"),
+    @SerialName("WASH") WASH("Lavadora"),
+    @SerialName("DRY")  DRY("Secadora"),
 }
 
+@Serializable
 enum class MachineStatus(val displayName: String) {
-    FREE("Livre"),
-    OCCUPIED("Ocupada"),
-    RESERVED("Reservada"),
+    @SerialName("FREE")      FREE("Livre"),
+    @SerialName("OCCUPIED")  OCCUPIED("Ocupada"),
+    @SerialName("RESERVED")  RESERVED("Reservada"),
 }
 
-/** Placeholder data for the laundry foundation. */
 val sampleMachines = listOf(
     WashingMachine("1", "Lavadora 01", MachineType.WASH, MachineStatus.FREE),
     WashingMachine("2", "Lavadora 02", MachineType.WASH, MachineStatus.OCCUPIED, timeRemainingSeconds = 1230),

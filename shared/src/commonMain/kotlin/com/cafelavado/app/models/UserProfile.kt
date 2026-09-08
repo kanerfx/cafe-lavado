@@ -1,16 +1,25 @@
 package com.cafelavado.app.models
 
-/**
- * Represents the current user's profile.
- */
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+
+// ============================================================
+//  UserProfile
+//  ------------------------------------------------------------
+//  Suggested Firestore collection: `users/{uid}`
+// ============================================================
+
+@Serializable
 data class UserProfile(
-    val id: String,
-    val name: String,
-    val email: String,
-    val loyaltyPoints: Int = 0,
+    @SerialName("id")             val id: String = "",
+    @SerialName("name")           val name: String = "",
+    @SerialName("email")          val email: String = "",
+    @SerialName("loyalty_points") val loyaltyPoints: Int = 0,
+    @SerialName("avatar_url")     val avatarUrl: String? = null,
+    @SerialName("phone")          val phone: String? = null,
+    @SerialName("created_at")     val createdAt: Long? = null,
 )
 
-/** Placeholder profile for the foundation. */
 val sampleProfile = UserProfile(
     id = "usr_001",
     name = "Maria Silva",

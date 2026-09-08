@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.kotlin.multiplatform)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.compose.multiplatform)
     alias(libs.plugins.android.library)
 }
@@ -34,11 +35,21 @@ kotlin {
             // Navigation — Voyager
             implementation(libs.voyager.navigator)
             implementation(libs.voyager.tab.navigator)
+            implementation(libs.voyager.screenmodel)
             implementation(libs.voyager.transitions)
+
+            // Material Icons Extended (for Help, Logout, etc.)
+            implementation(compose.materialIconsExtended)
 
             // Dependency Injection — Koin
             implementation(libs.koin.core)
             implementation(libs.koin.compose)
+
+            // Coroutines — needed by Flow in the data layer
+            implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.9.0")
+
+            // Serialization — needed by the Firestore-ready @Serializable models
+            implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.3")
         }
 
         androidMain.dependencies {
@@ -60,3 +71,9 @@ android {
         targetCompatibility = JavaVersion.VERSION_17
     }
 }
+
+compose.resources {
+    publicResClass = true
+    packageOfResClass = "com.cafelavado.app.shared.generated.resources"
+}
+

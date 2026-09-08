@@ -5,16 +5,16 @@ import androidx.compose.material3.darkColorScheme
 import androidx.compose.runtime.Composable
 
 private val CafeLavadoDarkScheme = darkColorScheme(
-    primary              = LuminousBlue,
-    onPrimary            = TextPrimary,
-    primaryContainer     = LuminousBlueSubtle,
+    primary              = Caramel,
+    onPrimary            = DarkBackground,
+    primaryContainer     = CaramelSubtle,
     onPrimaryContainer   = TextPrimary,
-    secondary            = LuminousBlueBright,
-    onSecondary          = TextPrimary,
-    secondaryContainer   = LuminousBlueSubtle,
+    secondary            = CaramelBright,
+    onSecondary          = DarkBackground,
+    secondaryContainer   = CaramelSubtle,
     onSecondaryContainer = TextPrimary,
-    tertiary             = LuminousBlueLight,
-    onTertiary           = DarkBackground,
+    tertiary             = CaramelRose,
+    onTertiary           = TextPrimary,
     background           = DarkBackground,
     onBackground         = TextPrimary,
     surface              = DarkSurface,
@@ -24,14 +24,17 @@ private val CafeLavadoDarkScheme = darkColorScheme(
     surfaceContainerHigh = DarkSurfaceHigh,
     outline              = TextMuted,
     outlineVariant       = DividerColor,
+    error                = StatusOccupied,
+    onError              = TextPrimary,
 )
 
 @Composable
 fun CafeLavadoTheme(content: @Composable () -> Unit) {
     MaterialTheme(
         colorScheme = CafeLavadoDarkScheme,
-        typography  = CafeLavadoTypography,
+        typography  = CafeLavadoTypography(),
         shapes      = CafeLavadoShapes,
         content     = content,
     )
 }
+
