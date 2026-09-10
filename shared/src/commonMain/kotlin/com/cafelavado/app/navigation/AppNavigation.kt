@@ -70,16 +70,27 @@ object ProfileTab : Tab {
 }
 @Composable
 fun AppNavigation() {
+    var mode by remember { mutableStateOf(AppMode.Cafeteria) }
     TabNavigator(HomeTab) {
         val navigator = LocalTabNavigator.current
         Scaffold(
             containerColor = DarkBackground,
             bottomBar = {
                 SectionModeBottomBar(
+                    mode = mode,
                     leftTabs = LeftTabs,
                     rightTabs = RightTabs,
+                    onModeToggle = {
+                        mode = if (mode == AppMode.Laundry) AppMode.Cafeteria else AppMode.Laundry
+                        navigator.current = if (mode == AppMode.Laundry) LaundryTab else MenuTab
+                    },
                     onTabClick = { tab ->
                         navigator.current = tab
+                        when (tab) {
+                            MenuTab -> mode = AppMode.Cafeteria
+                            LaundryTab -> mode = AppMode.Laundry
+                            else -> Unit
+                        }
                     },
                 )
             },
